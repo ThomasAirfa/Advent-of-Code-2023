@@ -33,13 +33,17 @@ public class Trebuchet {
      */
     Objects.requireNonNull(path, "Path to file is null.");
 
-    try (var reader = Files.newBufferedReader(path)) {
-      String line;
-      while ((line = reader.readLine()) != null) {
-        line = replaceWrittenNumbers(line);
-        this.sum += combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line)));
-      }
-    }
+//    try (var reader = Files.newBufferedReader(path)) {
+//      String line;
+//      while ((line = reader.readLine()) != null) {
+//        line = replaceWrittenNumbers(line);
+//        this.sum += combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line)));
+//      }
+//    }
+
+    this.sum = Files.lines(path).map(this::replaceWrittenNumbers)
+        .mapToInt(line -> combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line))))
+        .sum();
   }
 
   private String extractFirstInt(String line) {
@@ -80,7 +84,7 @@ public class Trebuchet {
   private String replaceWrittenNumbers(String line) {
     /*
      * Takes a String and replace digits spelled out in letters in their digit form.
-     * */
+     */
     for (var entry : dic.entrySet()) {
       line = line.replace(entry.getKey(), entry.getValue());
     }
