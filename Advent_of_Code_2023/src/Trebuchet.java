@@ -1,12 +1,26 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Trebuchet {
 
+  private static final Map<String, String> dic = new HashMap<String, String>();
+  static {
+    dic.put("one", "o1e");
+    dic.put("two", "t2o");
+    dic.put("three", "t3e");
+    dic.put("four", "f4r");
+    dic.put("five", "f5e");
+    dic.put("six", "s6x");
+    dic.put("seven", "s7n");
+    dic.put("eight", "e8t");
+    dic.put("nine", "n9e");
+  }
   private int sum;
 
   public Trebuchet() {
@@ -22,6 +36,7 @@ public class Trebuchet {
     try (var reader = Files.newBufferedReader(path)) {
       String line;
       while ((line = reader.readLine()) != null) {
+        line = replaceWrittenNumbers(line);
         this.sum += combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line)));
       }
     }
@@ -60,6 +75,16 @@ public class Trebuchet {
     Objects.requireNonNull(line, "Line is null.");
 
     return new StringBuilder(line).reverse().toString();
+  }
+
+  private String replaceWrittenNumbers(String line) {
+    /*
+     * Takes a String and replace digits spelled out in letters in their digit form.
+     * */
+    for (var entry : dic.entrySet()) {
+      line = line.replace(entry.getKey(), entry.getValue());
+    }
+    return line;
   }
 
   public int sum() {
