@@ -4,7 +4,6 @@ import java.nio.file.Path;
 public class Main {
 
   public static void main(String[] args) {
-    // Part 1
     var cubeConundrum = new CubeConundrum();
     try {
       cubeConundrum.readValuesInAllLines(Path.of("input.txt"));
@@ -12,5 +11,5 @@ public class Main {
       System.err.println(e.getMessage());
       System.exit(1);
     }
-  }
+  } 
 }
