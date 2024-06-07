@@ -21,10 +21,11 @@ public class Trebuchet {
     dic.put("eight", "e8t");
     dic.put("nine", "n9e");
   }
-  public int sum;
+  private int sum;
 
   public Trebuchet() {
     this.sum = 0;
+    
   }
 
   public void readValuesInAllLines(Path path) throws IOException {
@@ -41,8 +42,12 @@ public class Trebuchet {
 //      }
 //    }
 
-    this.sum = Files.lines(path).map(this::replaceWrittenNumbers)
-        .mapToInt(line -> combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line)))).sum();
+    try (var lines = Files.lines(path)) {
+      this.sum = lines.map(this::replaceWrittenNumbers)
+          .mapToInt(line -> combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line))))
+          .sum(); // Stream version
+      System.out.println(this.sum);
+    }
   }
 
   private String extractFirstInt(String line) {
