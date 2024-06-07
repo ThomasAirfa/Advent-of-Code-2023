@@ -21,7 +21,7 @@ public class Trebuchet {
     dic.put("eight", "e8t");
     dic.put("nine", "n9e");
   }
-  private int sum;
+  public int sum;
 
   public Trebuchet() {
     this.sum = 0;
@@ -42,8 +42,7 @@ public class Trebuchet {
 //    }
 
     this.sum = Files.lines(path).map(this::replaceWrittenNumbers)
-        .mapToInt(line -> combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line))))
-        .sum();
+        .mapToInt(line -> combineFirstAndLastInt(extractFirstInt(line), extractFirstInt(reverse(line)))).sum();
   }
 
   private String extractFirstInt(String line) {
@@ -89,12 +88,5 @@ public class Trebuchet {
       line = line.replace(entry.getKey(), entry.getValue());
     }
     return line;
-  }
-
-  public int sum() {
-    /*
-     * Getter for field sum.
-     */
-    return this.sum;
   }
 }

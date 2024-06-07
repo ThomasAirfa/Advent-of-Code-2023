@@ -11,6 +11,6 @@ public class Main {
       System.err.println(e.getMessage());
       System.exit(1);
     }
-    System.out.println(trebuchet.sum());
+    System.out.println(trebuchet.sum);
   }
 }
